@@ -1,0 +1,7 @@
+front:
+   image : tomcat:latest
+   ports :
+     - "8080:8080"
+   volumes :
+     - ./ROOT:/usr/local/tomcat/webapps/ROOT
+
