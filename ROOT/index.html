@@ -22,11 +22,14 @@
         var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update, render:render });
 
         var logo;
-        var size=1;
+        var sz=1;
+        var szinc=0.2;
+        var szmin=0.25;
+        var szmax=7;
+        var ainc=1.5;
         
         function preload () {
             game.load.image('logo', 'images/logo.png');
-
         }
 
         function create () {
@@ -36,13 +39,18 @@
         }
         
         function update () {
-        	logo.angle+=0.2;
-        	size+-1;
-        	logo.scale.setTo(size,size);
+        	if (sz<=szmin) {szinc = -szinc}
+            if (sz>=szmax) {szinc = -szinc}
+        	sz = sz+szinc;
+        	logo.scale.setTo(sz,sz);
+
+        	
+        	logo.angle+=ainc;
         }
         
         function render () {
-        	game.debug.spriteInfo(logo, 32, 32);
+        	//game.debug.spriteInfo(logo, 32, 32);
+        	//game.debug.text("scale="+sz+" szinc="+szinc, 400, 32);
         }
 
     };
