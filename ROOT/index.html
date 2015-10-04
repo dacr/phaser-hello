@@ -28,6 +28,12 @@
         var szmax=7;
         var ainc=1.5;
         
+        var howmany=16;
+        var sprites=[];
+        var aDelta=0;
+        var rayon=200;
+        var pi2=3.14159*2
+        
         function preload () {
             game.load.image('logo', 'images/logo.png');
         }
@@ -36,16 +42,36 @@
         	game.stage.backgroundColor = '#0072bc';
             logo = game.add.sprite(game.world.centerX, game.world.centerY, 'logo');
             logo.anchor.setTo(0.5, 0.5);
+               
+			for (i=0; i<howmany ; i+=1) {
+				sprites[i]=game.add.sprite(0, 0, 'logo');
+				sprites[i].anchor.setTo(0.5, 0.5);
+			}
+			moveThem(aDelta);
         }
+        
+        function moveThem(d) {
+        	var step=pi2/howmany;
+        	var a=0;
+			for (i=0; i<sprites.length ; i+=1) {
+				sprites[i].x=game.world.centerX+rayon*Math.cos(a+d);
+				sprites[i].y=game.world.centerY+rayon*Math.sin(a+d);
+				if (i % 2 == 0 ) sprites[i].angle+=ainc;
+				else sprites[i].angle-=ainc;
+				a+=step;
+			}
+        }
+        
         
         function update () {
         	if (sz<=szmin) {szinc = -szinc}
             if (sz>=szmax) {szinc = -szinc}
         	sz = sz+szinc;
         	logo.scale.setTo(sz,sz);
-
+        	logo.angle-=ainc;
         	
-        	logo.angle+=ainc;
+        	aDelta+=0.005;
+        	moveThem(aDelta);
         }
         
         function render () {
