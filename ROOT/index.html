@@ -3,7 +3,8 @@
     <head>
         <meta charset="UTF-8" />
         <title>hello phaser!</title>
-        <link rel="stylesheet" href="bootstrap.min.css">
+        <script src="js/jquery-min.js"></script>
+        <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/bootstrap-theme.min.css">
         <script src="js/bootstrap.min.js"></script>
         <script src="js/phaser.min.js"></script>
@@ -21,6 +22,7 @@
         var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update, render:render });
 
         var logo;
+        var size=1;
         
         function preload () {
             game.load.image('logo', 'images/logo.png');
@@ -34,7 +36,9 @@
         }
         
         function update () {
-        	logo.angle+=0.1;
+        	logo.angle+=0.2;
+        	size+-1;
+        	logo.scale.setTo(size,size);
         }
         
         function render () {
