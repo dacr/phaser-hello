@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>hello phaser!</title>
+        <script src="js/jquery-min.js"></script>
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/phaser.min.js"></script>
+
+
+    </head>
+    <body>
+
+    <h1>experiments</h1>
+    
+    <script type="text/javascript">
+
+    window.onload = function() {
+
+        var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update, render:render });
+
+        var cursors;
+        var ship={};
+        var PI=3.14159
+        
+        function preload () {
+          ship.imageName='ship';
+          game.load.image(ship.imageName, 'images/ship.png');
+        }
+
+        function create () {
+        	game.stage.backgroundColor = '#000000';
+        	
+        	cursors = game.input.keyboard.createCursorKeys();
+        	
+          ship.x = game.world.centerX
+          ship.y = game.world.centerY
+          ship.a = 0
+          ship.speed = 0
+        	ship.sprite = game.add.sprite(ship.x, ship.y, ship.imageName)
+          ship.sprite.anchor.setTo(0.5, 0.5)
+        }
+        
+        function update () {
+          if (cursors.left.isDown) ship.a-=2
+          if (cursors.right.isDown) ship.a+=2
+          if (cursors.up.isDown && ship.speed <5) {
+            ship.speed+=0.15
+          }
+          if (cursors.up.isUp && ship.speed>0) {
+            ship.speed-=0.05
+          }
+          ship.x+=ship.speed*Math.cos(ship.a*PI/180)
+          ship.y+=ship.speed*Math.sin(ship.a*PI/180)
+          
+          ship.sprite.angle=ship.a+90
+          ship.sprite.x = ship.x
+          ship.sprite.y = ship.y
+        }
+        
+        function render () {
+        	game.debug.spriteInfo(ship.sprite, 32, 32);
+        	game.debug.text("x="+ship.x, 400, 32);
+        	game.debug.text("y="+ship.y, 400, 48);
+        	game.debug.text("a="+ship.a, 400, 64);
+        	game.debug.text("s="+ship.a, 400, 80);
+        }
+
+    };
+
+    </script>
+
+    </body>
+</html>
+
