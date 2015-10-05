@@ -22,27 +22,33 @@
         var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update, render:render });
 
         var cursors;
+        var spacekey;
+        
         var ship={};
         var PI=3.14159
         
+        // ---------------------------------------------------------------------
         function preload () {
           ship.imageName='ship';
           game.load.image(ship.imageName, 'images/ship.png');
         }
 
+        // ---------------------------------------------------------------------
         function create () {
-        	game.stage.backgroundColor = '#000000';
+          game.stage.backgroundColor = '#000000';
         	
-        	cursors = game.input.keyboard.createCursorKeys();
-        	
+          cursors = game.input.keyboard.createCursorKeys();
+          spacekey = game.input.keyboard.addKey(Phaser.Keyboard.SPACE);
+          
           ship.x = game.world.centerX
           ship.y = game.world.centerY
           ship.a = 0
           ship.speed = 0
-        	ship.sprite = game.add.sprite(ship.x, ship.y, ship.imageName)
+          ship.sprite = game.add.sprite(ship.x, ship.y, ship.imageName)
           ship.sprite.anchor.setTo(0.5, 0.5)
         }
         
+        // ---------------------------------------------------------------------
         function update () {
           if (cursors.left.isDown) ship.a-=2
           if (cursors.right.isDown) ship.a+=2
@@ -61,6 +67,7 @@
           ship.sprite.y = ship.y
         }
         
+        // ---------------------------------------------------------------------
         function render () {
         	game.debug.spriteInfo(ship.sprite, 32, 32);
         	game.debug.text("x="+ship.x, 400, 32);
